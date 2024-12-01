@@ -110,3 +110,11 @@
   --pastel-light-pink: #f8b8c8; /* Replace with the exact shade of pastel light pink */
 }
 
+
+
+canvas {
+  display: block;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}

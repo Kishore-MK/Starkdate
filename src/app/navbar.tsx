@@ -5,13 +5,15 @@ import Image from 'next/image'
 const Navbar = () => {
   return (
     
-    <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400">
-    <div ><Image src="/logo.svg" alt="StarkDate Logo" width={50} height={40} />
-    </div>
-  <div className='bg-gradient-to-r from-purple-600 via-pink-500 to-pink-500 rounded-md hover:from-pink-500 hover:via-pink-300 hover:to-pink-300'>
+    <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-[#D14E70] via-[#8E2A4A] to-[#F7D1D1]">
+  <div>
+    <Image src="/logo.svg" alt="StarkDate Logo" width={50} height={40} />
+  </div>
+  <div className='bg-gradient-to-r from-[#8E2A4A] via-[#D14E70] to-[#f57474] rounded-md text-white'>
     <StarknetKit />
   </div>
 </div>
+
 
   )
 }
