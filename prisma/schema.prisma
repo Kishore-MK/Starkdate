@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  address           String
+  personalityTrait  PersonalityTrait
+  interests         String[] 
+  lifestyle         Lifestyle
+  relationshipGoal  RelationshipGoal
+  zodiacSign        ZodiacSign
+  education         String
+  profession        String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+enum PersonalityTrait {
+  INTROVERT
+  EXTROVERT
+  AMBIVERT
+}
+
+enum ZodiacSign {
+  ARIES
+  TAURUS
+  GEMINI
+  CANCER
+  LEO
+  VIRGO
+  LIBRA
+  SCORPIO
+  SAGITTARIUS
+  CAPRICORN
+  AQUARIUS
+  PISCES
+}
+
+enum RelationshipGoal {
+  CASUAL
+  SERIOUS
+  FRIENDSHIP
+  OTHER
+}
+
+enum Lifestyle {
+  ACTIVE
+  MODERATE
+  RELAXED
+}

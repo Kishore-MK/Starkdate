@@ -16,19 +16,23 @@ import {
 } from "starknetkit";
 import { Button } from "./ui/button";
 import { availableConnectors } from "@/lib/argentX";
+import { cn } from "@/lib/utils";
+import clsx from "clsx";
 
 
 
-export default function StarknetKit() {
-        return (
-          <StarknetProvider>
-            <StarknetKitInner />
-          </StarknetProvider>
-        );
-        }
-        
-        /** This Demo is for experimental purpose only, will be removed later */
-function StarknetKitInner() {
+export default function StarknetKit({ val }: { val: string }) {
+  return (
+    <StarknetProvider>
+      <StarknetKitInner value={val} />
+    </StarknetProvider>
+  );
+}
+
+/** This Demo is for experimental purpose only, will be removed later */
+export function StarknetKitInner({ value }: { value: string }) {
+ 
+
         const { connectAsync, connectors } = useConnect();
         const { starknetkitConnectModal } = useStarknetkitConnectModal({
           connectors: availableConnectors as StarknetkitConnector[],
@@ -53,8 +57,15 @@ return (
   <div>
     <div className="">
       
-
-      <Button className="w-auto overflow-hidden" onClick={connectWalletWithModal}>{address?address:"Connect Wallet"}</Button>
+<Button
+  className={clsx(
+    'bg-gradient-to-r from-[#8E2A4A] via-[#D14E70] to-[#f57474] rounded-md text-white',
+    cn
+  )}
+  onClick={connectWalletWithModal}
+>
+  {address ? address : value}
+</Button>
 
     </div>
   </div>
