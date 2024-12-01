@@ -105,12 +105,8 @@
     --chart-5: 340 75% 55%;
   }
 }
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+:root {
+  --pastel-purple: #a890e0; /* Replace with the exact shade of pastel purple */
+  --pastel-light-pink: #f8b8c8; /* Replace with the exact shade of pastel light pink */
 }
+
