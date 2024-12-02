@@ -16,6 +16,8 @@ import type {
   RelationshipGoal,
   ZodiacSign,
 } from '../../components/types/form';
+import Navbar from '../navbar';
+import Footer from '@/components/footer';
 
 const TOTAL_STEPS = 6;
 
@@ -59,6 +61,8 @@ export default function Profile() {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-primary-500 to-primary-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} />
@@ -103,7 +107,7 @@ export default function Profile() {
             <Summary formData={formData} />
           </FormStep>
 
-          <NavigationButtons
+          <NavigationButtons data={formData}
             currentStep={currentStep}
             totalSteps={TOTAL_STEPS}
             onPrevious={handlePrevious}
@@ -113,6 +117,7 @@ export default function Profile() {
         </div>
       </div>
     </div>
+    <Footer/>
+    </div>
   );
 }
-

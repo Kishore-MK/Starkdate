@@ -64,7 +64,7 @@ return (
   )}
   onClick={connectWalletWithModal}
 >
-  {address ? address : value}
+  {address ? address  : value}
 </Button>
 
     </div>

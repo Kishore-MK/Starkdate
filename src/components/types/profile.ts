@@ -19,6 +19,7 @@ export type RelationshipGoal = 'CASUAL' | 'SERIOUS' | 'FRIENDSHIP' | 'OTHER';
 export type DietPreference = 'Vegetarian' | 'Non-Vegetarian' | 'Vegan' | 'Other';
 
 export interface UserProfile {
+  
   basicInfo: {
     profilePicture: string;
     name: string;
@@ -58,3 +59,14 @@ export interface UserProfile {
     genderPreferences: Gender[];
   };
 }
+
+export interface Profile {
+  id: string;
+  name: string;
+  age: number;
+  bio: string;
+  image: string;
+  location: string;
+  interests: string[];
+}
+export type SwipeDirection = 'left' | 'right' | 'up' | null;

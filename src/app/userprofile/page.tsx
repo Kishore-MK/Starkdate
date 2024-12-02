@@ -7,8 +7,11 @@ import { LifestylePreferences } from '../../components/LifestylePreferences';
 import { VisibilitySettings } from '../../components/VisibilitySettings';
 import type { UserProfile } from '../../components/types/profile';
 import { interestCategories } from '../../components/data/interests';
+import Navbar from '../navbar';
+import Footer from '@/components/footer';
 
 function App() {
+  const [saved,setSaved]= useState(false);
   const [profile, setProfile] = useState<UserProfile>({
     basicInfo: {
       profilePicture: '',
@@ -140,16 +143,24 @@ function App() {
   };
 
   const handleSaveProfile = () => {
+    setSaved(true);
+    console.log('Profile Data:', profile);
+  };
+  const handleEditProfile = () => {
+    setSaved(false);
     console.log('Profile Data:', profile);
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="min-h-screen bg-gradient-to-r from-pink-100 to-pink-300 py-8">
   <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
-    <h1 className="text-3xl font-bold text-center text-[#8E2A4A] mb-8">Dating Profile</h1>
+    <h1 className="text-3xl font-bold text-center text-[#8E2A4A] mb-8">StarkDate Profile</h1>
     
     <div className="space-y-12">
       <BasicInfo
+      saved={saved} setSaved={setSaved}
         {...profile.basicInfo}
         onChange={handleBasicInfoChange}
         onImageUpload={handleImageUpload}
@@ -158,6 +169,7 @@ function App() {
       <hr className="border-[#D14E70]" />
       
       <AboutMe
+      saved={saved} setSaved={setSaved}
         {...profile.aboutMe}
         onChange={handleAboutMeChange}
       />
@@ -165,6 +177,7 @@ function App() {
       <hr className="border-[#D14E70]" />
       
       <InterestSection
+      saved={saved} setSaved={setSaved}
         selectedInterests={profile.interests}
         onChange={handleInterestChange}
       />
@@ -172,6 +185,7 @@ function App() {
       <hr className="border-[#D14E70]" />
       
       <LifestylePreferences
+      saved={saved} setSaved={setSaved}
         {...profile.lifestyle}
         onChange={handleLifestyleChange}
       />
@@ -179,20 +193,28 @@ function App() {
       <hr className="border-[#D14E70]" />
       
       <VisibilitySettings
+      saved={saved} setSaved={setSaved}
         {...profile.visibility}
         onChange={handleVisibilityChange}
       />
       
       <div className="flex justify-center pt-6">
-        <button
+      {saved? <button
+          onClick={handleEditProfile}
+          className="bg-[#D14E70] text-white px-6 py-2 rounded-md hover:bg-[#8E2A4A] focus:outline-none focus:ring-2 focus:ring-[#D14E70] focus:ring-offset-2"
+        >
+          Edit Profile
+        </button>:<button
           onClick={handleSaveProfile}
           className="bg-[#D14E70] text-white px-6 py-2 rounded-md hover:bg-[#8E2A4A] focus:outline-none focus:ring-2 focus:ring-[#D14E70] focus:ring-offset-2"
         >
           Save Profile
-        </button>
+        </button>}
       </div>
     </div>
   </div>
+</div>
+<Footer/>
 </div>
 
   );

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Gender } from './types/profile';
+import { Label } from './ui/label';
 
 interface VisibilitySettingsProps {
+  saved: boolean;
+  setSaved: (state:boolean)=>void;
   isPublic: boolean;
   ageRange: {
     min: number;
@@ -12,16 +15,20 @@ interface VisibilitySettingsProps {
 }
 
 export function VisibilitySettings({
+  saved,
+  setSaved,
   isPublic,
   ageRange,
   genderPreferences,
   onChange,
 }: VisibilitySettingsProps) {
+  const [savedgender,setGender]=useState("");
   const handleGenderPreferenceChange = (gender: Gender) => {
     const updatedPreferences = genderPreferences.includes(gender)
       ? genderPreferences.filter((g) => g !== gender)
       : [...genderPreferences, gender];
     onChange('genderPreferences', updatedPreferences);
+    setGender(updatedPreferences[0])
   };
 
   return (
@@ -32,12 +39,14 @@ export function VisibilitySettings({
     {/* Public Profile */}
     <label className="flex items-center space-x-2">
       <span className="text-sm font-medium text-[#8E2A4A]">Public Profile</span>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{isPublic}</Label>:
       <input
         type="checkbox"
         checked={isPublic}
         onChange={(e) => onChange('isPublic', e.target.checked)}
         className="rounded border-pink-300 text-[#D14E70] focus:ring-[#D14E70]"
-      />
+      />}
     </label>
 
     {/* Age Range Preference */}
@@ -75,9 +84,12 @@ export function VisibilitySettings({
         Gender Preferences
       </label>
       <div className="space-y-2">
+      {saved? <Label className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{savedgender}</Label>: <div>
         {(['Male', 'Female', 'Non-binary', 'Other'] as Gender[]).map(
           (gender) => (
             <label key={gender} className="flex items-center space-x-2">
+             
               <input
                 type="checkbox"
                 checked={genderPreferences.includes(gender)}
@@ -87,7 +99,7 @@ export function VisibilitySettings({
               <span className="text-sm text-[#8E2A4A]">{gender}</span>
             </label>
           )
-        )}
+        )}</div>}
       </div>
     </div>
   </div>

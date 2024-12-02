@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import Navbar from './navbar'
 import StarknetKit from '@/components/walletconnect'
 import Footer from '@/components/footer'
+import { redirect } from 'next/navigation'
 
 
 export default function Home() {
@@ -112,7 +113,7 @@ export default function Home() {
         <h2 className="text-3xl font-extrabold text-[#8E2A4A] mb-6 drop-shadow-lg">
           Ready to Find Your Spark?
         </h2>
-        <Button
+        <Button onClick={()=>{redirect("/home")}}
           className="btn-primary text-lg bg-[#b12753] text-white py-3 px-6 rounded-full shadow-xl hover:bg-[#a01d47] transition-all duration-300"
         >
           Join StarkDate Now

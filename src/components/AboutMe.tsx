@@ -4,6 +4,8 @@ import { Label } from './ui/label';
 import { Select } from './ui/select';
 
 interface AboutMeProps {
+  saved: boolean;
+  setSaved: (state:boolean)=>void;
   bio: string;
   personalityTrait: PersonalityTrait;
   zodiacSign: ZodiacSign;
@@ -11,6 +13,8 @@ interface AboutMeProps {
 }
 
 export function AboutMe({
+  saved,
+  setSaved,
   bio,
   personalityTrait,
   zodiacSign,
@@ -30,6 +34,9 @@ export function AboutMe({
     {/* Bio */}
     <div>
       <Label className="block text-sm font-medium text-[#8E2A4A]">Bio</Label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{bio}</Label>:
+        <div>
       <textarea
         value={bio}
         onChange={(e) => onChange('bio', e.target.value)}
@@ -39,6 +46,7 @@ export function AboutMe({
         placeholder="Tell us about yourself..."
       />
       <p className="text-sm text-pink-500 mt-1">{bio.length}/250 characters</p>
+      </div>}
     </div>
 
     {/* Personality Trait */}
@@ -46,6 +54,9 @@ export function AboutMe({
       <Label className="block text-sm font-medium text-[#8E2A4A]">
         Personality Trait
       </Label>
+      
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{personalityTrait}</Label>:
       <select
         value={personalityTrait}
         onChange={(e) => onChange('personalityTrait', e.target.value)}
@@ -54,7 +65,7 @@ export function AboutMe({
         <option value="INTROVERT">Introvert</option>
         <option value="EXTROVERT">Extrovert</option>
         <option value="AMBIVERT">Ambivert</option>
-      </select>
+      </select>}
     </div>
 
     {/* Zodiac Sign */}
@@ -62,6 +73,8 @@ export function AboutMe({
       <label className="block text-sm font-medium text-[#8E2A4A]">
         Zodiac Sign
       </label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{zodiacSign}</Label>:
       <select
         value={zodiacSign}
         onChange={(e) => onChange('zodiacSign', e.target.value as ZodiacSign)}
@@ -72,7 +85,7 @@ export function AboutMe({
             {sign}
           </option>
         ))}
-      </select>
+      </select>}
     </div>
   </div>
 </div>

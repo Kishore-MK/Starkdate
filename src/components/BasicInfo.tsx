@@ -1,8 +1,12 @@
 import React from 'react';
 import { Camera } from 'lucide-react';
 import type { Gender } from './types/profile';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
 interface BasicInfoProps {
+  saved: boolean;
+  setSaved: (state:boolean)=>void;
   profilePicture: string;
   name: string;
   age: number;
@@ -13,6 +17,8 @@ interface BasicInfoProps {
 }
 
 export function BasicInfo({
+  saved,
+  setSaved,
   profilePicture,
   name,
   age,
@@ -47,31 +53,37 @@ export function BasicInfo({
   <div className="space-y-4">
     {/* Name */}
     <div>
-      <label className="block text-sm font-medium text-[#8E2A4A]">Name</label>
-      <input
+      <Label className="block text-sm font-medium text-[#8E2A4A]">Name</Label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{name}</Label>:
+      <Input
         type="text"
         value={name}
         onChange={(e) => onChange('name', e.target.value)}
         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
-      />
+      />}
     </div>
 
     {/* Age */}
     <div>
       <label className="block text-sm font-medium text-[#8E2A4A]">Age</label>
-      <input
+      
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{age}</Label>:<input
         type="number"
         min="18"
         max="99"
         value={age}
         onChange={(e) => onChange('age', parseInt(e.target.value))}
         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
-      />
+      />}
     </div>
 
     {/* Gender */}
     <div>
       <label className="block text-sm font-medium text-[#8E2A4A]">Gender</label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{gender}</Label>:
       <select
         value={gender}
         onChange={(e) => onChange('gender', e.target.value)}
@@ -81,19 +93,20 @@ export function BasicInfo({
         <option value="Female">Female</option>
         <option value="Non-binary">Non-binary</option>
         <option value="Other">Other</option>
-      </select>
+      </select>}
     </div>
 
     {/* Location */}
     <div>
       <label className="block text-sm font-medium text-[#8E2A4A]">Location</label>
-      <input
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{location}</Label>:<input
         type="text"
         value={location}
         onChange={(e) => onChange('location', e.target.value)}
         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
         placeholder="City, Country"
-      />
+      />}
     </div>
   </div>
 </div>

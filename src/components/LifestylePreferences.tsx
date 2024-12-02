@@ -4,8 +4,11 @@ import type {
   RelationshipGoal,
   DietPreference,
 } from './types/profile';
+import { Label } from './ui/label';
 
 interface LifestylePreferencesProps {
+  saved: boolean;
+  setSaved: (state:boolean)=>void;
   lifestyleChoice: LifestyleChoice;
   relationshipGoal: RelationshipGoal;
   smoking: boolean;
@@ -15,6 +18,8 @@ interface LifestylePreferencesProps {
 }
 
 export function LifestylePreferences({
+  saved,
+  setSaved,
   lifestyleChoice,
   relationshipGoal,
   smoking,
@@ -32,6 +37,8 @@ export function LifestylePreferences({
       <label className="block text-sm font-medium text-[#8E2A4A]">
         Lifestyle Choice
       </label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{lifestyleChoice}</Label>:
       <select
         value={lifestyleChoice}
         onChange={(e) => onChange('lifestyleChoice', e.target.value)}
@@ -40,7 +47,7 @@ export function LifestylePreferences({
         <option value="ACTIVE">Active</option>
         <option value="MODERATE">Moderate</option>
         <option value="RELAXED">Relaxed</option>
-      </select>
+      </select>}
     </div>
 
     {/* Relationship Goal */}
@@ -48,6 +55,8 @@ export function LifestylePreferences({
       <label className="block text-sm font-medium text-[#8E2A4A]">
         Relationship Goal
       </label>
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{relationshipGoal}</Label>:
       <select
         value={relationshipGoal}
         onChange={(e) => onChange('relationshipGoal', e.target.value)}
@@ -57,29 +66,32 @@ export function LifestylePreferences({
         <option value="SERIOUS">Serious</option>
         <option value="FRIENDSHIP">Friendship</option>
         <option value="OTHER">Other</option>
-      </select>
+      </select>}
     </div>
 
     {/* Smoking and Drinking */}
     <div className="flex space-x-4">
       <label className="flex items-center space-x-2">
         <span className="text-sm font-medium text-[#8E2A4A]">Smoking</span>
+        {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{smoking}</Label>:
         <input
           type="checkbox"
           checked={smoking}
           onChange={(e) => onChange('smoking', e.target.checked)}
           className="rounded border-pink-300 text-[#D14E70] focus:ring-[#D14E70]"
-        />
+        />}
       </label>
 
       <label className="flex items-center space-x-2">
         <span className="text-sm font-medium text-[#8E2A4A]">Drinking</span>
-        <input
+        {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{drinking}</Label>:<input
           type="checkbox"
           checked={drinking}
           onChange={(e) => onChange('drinking', e.target.checked)}
           className="rounded border-pink-300 text-[#D14E70] focus:ring-[#D14E70]"
-        />
+          />}
       </label>
     </div>
 
@@ -88,7 +100,8 @@ export function LifestylePreferences({
       <label className="block text-sm font-medium text-[#8E2A4A]">
         Diet Preference
       </label>
-      <select
+      {saved? <Label         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
+        >{dietPreference}</Label>:<select
         value={dietPreference}
         onChange={(e) => onChange('dietPreference', e.target.value)}
         className="mt-1 block w-full rounded-md border-pink-300 shadow-sm focus:border-[#D14E70] focus:ring-[#D14E70]"
@@ -97,7 +110,7 @@ export function LifestylePreferences({
         <option value="Non-Vegetarian">Non-Vegetarian</option>
         <option value="Vegan">Vegan</option>
         <option value="Other">Other</option>
-      </select>
+      </select>}
     </div>
   </div>
 </div>
