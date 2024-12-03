@@ -4,6 +4,7 @@ import {
 } from "@/lib/userValidation";
 
 
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -65,3 +66,153 @@ export async function POST(req: Request) {
 //     return Response.json({ error: "Internal server srror" }, { status: 500 });
 //   }
 // }
+
+type Person = {
+  id: number;
+  name: string;
+  interests: string[];
+  personalityTrait: string;
+  relationshipGoal: string;
+  zodiacSign: string;
+  isActive: boolean;
+  educationOrProfession: string;
+  age: number;
+};
+
+type MatchScore = {
+  personA: number; // Using ID for efficient storage
+  personB: number;
+  score: number;
+};
+
+function calculateCompatibilityScore(personA: Person, personB: Person, weights: Record<string, number>): number {
+  let score = 0;
+
+  // Interest matching
+  const sharedInterests = personA.interests.filter(interest =>
+    personB.interests.includes(interest)
+  ).length;
+  score += (sharedInterests / Math.max(personA.interests.length, 1)) * weights.interests;
+
+  // Personality trait matching
+  if (personA.personalityTrait === personB.personalityTrait) {
+    score += weights.personalityTrait;
+  }
+
+  // Relationship goal matching
+  if (personA.relationshipGoal === personB.relationshipGoal) {
+    score += weights.relationshipGoal;
+  }
+
+  // Zodiac sign compatibility
+  if (personA.zodiacSign === personB.zodiacSign) {
+    score += weights.zodiacSign;
+  }
+
+  // Active status
+  if (personA.isActive === personB.isActive) {
+    score += weights.isActive;
+  }
+
+  // Education/profession similarity
+  if (personA.educationOrProfession === personB.educationOrProfession) {
+    score += weights.educationOrProfession;
+  }
+
+  // Age compatibility
+  const ageDifference = Math.abs(personA.age - personB.age);
+  score += (1 - Math.min(ageDifference, 10) / 10) * weights.age;
+
+  return score;
+}
+
+function findMatchesOptimized(
+  people: Person[],
+  weights: Record<string, number>,
+  threshold: number = 0.5
+): MatchScore[] {
+  const matches: MatchScore[] = [];
+
+  // Pre-filtering: Group users by relationship goal
+  const groupedUsers = people.reduce<Record<string, Person[]>>((groups, person) => {
+    if (!groups[person.relationshipGoal]) {
+      groups[person.relationshipGoal] = [];
+    }
+    groups[person.relationshipGoal].push(person);
+    return groups;
+  }, {});
+
+  // Process each group independently
+  for (const group of Object.values(groupedUsers)) {
+    const activeUsers = group.filter(person => person.isActive);
+
+    // Only compare active users within the same group
+    for (let i = 0; i < activeUsers.length; i++) {
+      for (let j = i + 1; j < activeUsers.length; j++) {
+        const personA = activeUsers[i];
+        const personB = activeUsers[j];
+
+        const score = calculateCompatibilityScore(personA, personB, weights);
+        if (score >= threshold) {
+          matches.push({
+            personA: personA.id,
+            personB: personB.id,
+            score,
+          });
+        }
+      }
+    }
+  }
+
+  return matches.sort((a, b) => b.score - a.score);
+}
+
+// Example usage
+const people: Person[] = [
+  {
+    id: 1,
+    name: "Alice",
+    interests: ["reading", "hiking", "movies"],
+    personalityTrait: "introvert",
+    relationshipGoal: "long-term",
+    zodiacSign: "Leo",
+    isActive: true,
+    educationOrProfession: "engineer",
+    age: 28,
+  },
+  {
+    id: 2,
+    name: "Bob",
+    interests: ["hiking", "gaming", "movies"],
+    personalityTrait: "extrovert",
+    relationshipGoal: "long-term",
+    zodiacSign: "Leo",
+    isActive: true,
+    educationOrProfession: "designer",
+    age: 30,
+  },
+  {
+    id: 3,
+    name: "Charlie",
+    interests: ["gaming", "traveling", "movies"],
+    personalityTrait: "introvert",
+    relationshipGoal: "casual",
+    zodiacSign: "Cancer",
+    isActive: false,
+    educationOrProfession: "teacher",
+    age: 26,
+  },
+];
+
+const weights = {
+  interests: 0.3,
+  personalityTrait: 0.2,
+  relationshipGoal: 0.2,
+  zodiacSign: 0.1,
+  isActive: 0.1,
+  educationOrProfession: 0.05,
+  age: 0.05,
+};
+
+const matches = findMatchesOptimized(people, weights);
+console.log("Matches:", matches);

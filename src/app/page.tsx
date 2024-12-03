@@ -50,7 +50,7 @@ export default function Home() {
           Join StarkDate and experience a new era of private, secure, and exciting connections.
         </p>
         <Button
-          onClick={() => setIsSignupOpen(true)}
+          onClick={() => redirect("/profilesetup")}
           className="btn-primary text-lg bg-white text-[#8E2A4A] hover:bg-[#b8526d] hover:text-white py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300"
         >
           Get Started
@@ -113,7 +113,7 @@ export default function Home() {
         <h2 className="text-3xl font-extrabold text-[#8E2A4A] mb-6 drop-shadow-lg">
           Ready to Find Your Spark?
         </h2>
-        <Button onClick={()=>{redirect("/home")}}
+        <Button onClick={()=>{redirect("/foryou")}}
           className="btn-primary text-lg bg-[#b12753] text-white py-3 px-6 rounded-full shadow-xl hover:bg-[#a01d47] transition-all duration-300"
         >
           Join StarkDate Now

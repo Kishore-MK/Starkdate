@@ -9,16 +9,17 @@ import type { UserProfile } from '../../components/types/profile';
 import { interestCategories } from '../../components/data/interests';
 import Navbar from '../navbar';
 import Footer from '@/components/footer';
+import { redirect } from 'next/navigation';
 
 function App() {
   const [saved,setSaved]= useState(false);
   const [profile, setProfile] = useState<UserProfile>({
     basicInfo: {
       profilePicture: '',
-      name: '',
+      name: 'Jason',
       age: 18,
       gender: 'Male',
-      location: '',
+      location: 'Bangalore',
     },
     aboutMe: {
       bio: '',
@@ -145,6 +146,7 @@ function App() {
   const handleSaveProfile = () => {
     setSaved(true);
     console.log('Profile Data:', profile);
+    redirect("/foryou")
   };
   const handleEditProfile = () => {
     setSaved(false);

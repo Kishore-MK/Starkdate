@@ -4,7 +4,6 @@ import Footer from '@/components/footer';
 import React, { useState } from 'react';
 import Navbar from '../navbar';
 import Image from 'next/image';
-
 interface Soulmate {
   id: number;
   profileImage: string;
@@ -146,9 +145,6 @@ const Home: React.FC = () => {
       </div>
     ))}
   </div>
-
-
-
       
     </div>
     </div><Footer/>
